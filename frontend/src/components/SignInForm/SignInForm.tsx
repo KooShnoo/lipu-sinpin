@@ -4,12 +4,12 @@ import { inputOnChange } from '../../utils';
 
 export default function SignInForm() {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit: React.FormEventHandler<HTMLFormElement>  = e => {
     e.preventDefault();
-    
-  }
+
+  };
   return(
     <>
       <form onSubmit={handleSubmit}>

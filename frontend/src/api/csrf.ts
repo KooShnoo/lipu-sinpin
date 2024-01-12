@@ -9,7 +9,7 @@ export async function restoreCSRF() {
 }
 
 /** wrapper around {@linkcode fetch} */
-export async function load(input: RequestInfo | URL, opts: RequestInit & {csrfHeader?: boolean, jsonHeader?: boolean} = {}, ) {
+export async function load(input: RequestInfo | URL, opts: RequestInit & {csrfHeader?: boolean, jsonHeader?: boolean} = {} ) {
   opts.headers = new Headers(opts.headers);
   if (opts.csrfHeader) {
     const csrfToken = sessionStorage.getItem('X-CSRF-Token');

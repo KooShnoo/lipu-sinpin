@@ -1,13 +1,15 @@
 class User < ApplicationRecord
   has_secure_password
+  before_validation :ensure_session_token
 
-  validates :first_name, length: { maximum: 40 }
-  validates :last_name, length: { maximum: 40 }
-  validates :email, uniqueness: true, length: { in: 3..100 }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  # rubocop:disable Layout/LineLength
+  validates :first_name, presence: true, length: { maximum: 40 }
+  validates :last_name, presence: true, length: { maximum: 40 }
+  validates :email, presence: true, uniqueness: true, length: { in: 3..100 }, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :session_token, presence: true, uniqueness: true
   validates :password, length: { in: 6..40 }, allow_nil: true
-
-  before_validation :ensure_session_token
+  validates :password_digest, presence: true
+  # rubocop:enable Layout/LineLength
 
   has_many :posts, foreign_key: :author_id, dependent: :destroy
   has_many :comments, foreign_key: :author_id, dependent: :destroy
@@ -30,13 +32,16 @@ class User < ApplicationRecord
 
   def generate_unique_session_token
     # rubocop:disable all
+    token = SecureRandom.base64
     until !User.exists?(session_token: token)
       token = SecureRandom.base64
     end
+    # token
     # rubocop:enable all
   end
 
   def ensure_session_token
+    p 'e'
     self.session_token ||= generate_unique_session_token
   end
 end
