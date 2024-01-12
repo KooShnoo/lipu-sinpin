@@ -1,0 +1,11 @@
+input {
+  @apply p-4 rounded-md border-gray-300 border-[1px] active:border-blue-600 !important
+}
+
+form {
+  @apply flex flex-col gap-4 !important
+}
+
+button {
+  @apply p-4 rounded-md bg-fb-blue text-white font-bold text-xl !important
+}
