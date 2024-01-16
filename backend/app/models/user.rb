@@ -17,8 +17,8 @@ class User < ApplicationRecord
   has_many :friendships, foreign_key: :friender_id, class_name: 'Friend', dependent: :destroy
   has_many :friends, through: :friendships, source: :friended
 
-  def self.find_by_email(email, password)
-    user = User.find_by(email)
+  def self.find_by_credentials(email, password)
+    user = User.find_by_email(email)
     # from has_secure_password
     user&.authenticate(password)
   end
@@ -36,7 +36,7 @@ class User < ApplicationRecord
     until !User.exists?(session_token: token)
       token = SecureRandom.base64
     end
-    # token
+    token
     # rubocop:enable all
   end
 

@@ -8,3 +8,8 @@
   font-weight: normal;
   font-style: normal;
 }
+
+i {
+  color: red;
+  @apply absolute right-3 top-7
+}
