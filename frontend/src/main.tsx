@@ -6,6 +6,7 @@ import { restoreCSRF } from './api/csrf.ts';
 import { Provider } from 'react-redux';
 import { store } from './state/store.ts';
 import './index.css';
+import './reset.css';
 
 restoreCSRF();
 
