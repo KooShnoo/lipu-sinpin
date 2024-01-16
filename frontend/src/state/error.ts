@@ -3,23 +3,25 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // import { Thunk } from "./store";
 
 interface ErrorsState {
-  login: string[] | null;
-  postForm: string[] | null;
+  signIn: string[] | null;
+  signUp: string[] | null;
 }
 
 const initialState: ErrorsState = {
-  login: null,
-  postForm: null,
+  signIn: null,
+  signUp: null,
 };
 
 export const errorsSlice = createSlice({
   name: 'errors',
   initialState,
   reducers: {
-    setLoginErrors: (state, action: PayloadAction<{errors: string[]}>) => {state.login = action.payload.errors;},
-    clearLoginErrors: state => {state.login = null;},
+    setSignInErrors: (state, action: PayloadAction<{errors: string[]}>) => {state.signIn = action.payload.errors;},
+    clearSignInErrors: state => {state.signIn = null;},
+    setSignUpErrors: (state, action: PayloadAction<{errors: string[]}>) => {state.signUp = action.payload.errors;},
+    clearSignUpErrors: state => {state.signUp = null;},
   },
 });
 
-export const { setLoginErrors: setLoginErrors } = errorsSlice.actions;
+export const { setSignInErrors, setSignUpErrors } = errorsSlice.actions;
 export default errorsSlice.reducer;

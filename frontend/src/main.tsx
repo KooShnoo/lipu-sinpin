@@ -7,14 +7,19 @@ import { Provider } from 'react-redux';
 import { store } from './state/store.ts';
 import './index.css';
 import './reset.css';
+import Feed from './components/Feed/Feed.tsx';
 
 restoreCSRF();
 
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <Splash />,
+  },
+  {
+    path: 'home',
+    element: <Feed />,
   },
 ]);
 

@@ -1,0 +1,27 @@
+.input {
+  @apply w-full p-4 rounded-md border-[1px]
+}
+
+.formContainer {
+  @apply w-full p-4 rounded-md drop-shadow-lg flex flex-col gap-4 bg-white
+}
+
+.button {
+  @apply p-4 rounded-md text-white font-bold text-xl active:scale-[0.95] transition-transform duration-[25] !important
+}
+
+.inputContainer {
+  @apply relative
+}
+
+.signIn{
+  @apply bg-fb-blue
+}
+
+.signUp{
+  @apply bg-green-500
+}
+
+.divider {
+  @apply border-b-[1px] border-gray-300
+}
