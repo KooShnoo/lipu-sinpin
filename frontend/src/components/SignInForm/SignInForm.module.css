@@ -25,3 +25,10 @@
 .divider {
   @apply border-b-[1px] border-gray-300
 }
+
+.demoSignIn {
+  @apply text-center text-fb-blue 
+}
+.demoSignIn span {
+  @apply hover:underline cursor-pointer
+}

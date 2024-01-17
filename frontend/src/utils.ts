@@ -1,1 +1,2 @@
 export const inputOnChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.ChangeEvent<HTMLInputElement>) => setter(e.target.value);
+export const demoUser = {email: "demo@user.com", password: "password"};

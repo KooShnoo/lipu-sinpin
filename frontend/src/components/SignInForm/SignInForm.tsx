@@ -1,7 +1,7 @@
 import style from'./SignInForm.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { inputOnChange } from '../../utils';
+import { demoUser, inputOnChange } from '../../utils';
 import { signInUser } from '../../state/session';
 import { Dispatch, State } from '../../state/store';
 
@@ -35,6 +35,7 @@ export default function SignInForm({ setShowSignUpForm }: {setShowSignUpForm: Re
           {signInErrors?.map(error => <p key={error} className="text-red-600">{error}</p>)}
         </div>
         <button className={`${style.button} ${style.signIn}`}>Log In</button>
+        <p className={style.demoSignIn} onClick={() => dispatch(signInUser(demoUser))}><span>Sign in as Demo User</span></p>
         <div className={style.divider} />
         <button className={`${style.button} ${style.signUp}`} onClick={() => setShowSignUpForm(true)} type="button" >Create new account</button>
       </form>

@@ -24,8 +24,6 @@ const initialState: SessionState = {
 };
 
 export const signUpUser = (user: {first_name: string, last_name: string, email: string, password: string}): Thunk => async (dispatch: Dispatch) => {
-  console.log(user);
-  console.log(user.password);
   const res = await load('/api/users', {
     method: 'POST',
     body: JSON.stringify({user}),
@@ -40,7 +38,7 @@ export const signUpUser = (user: {first_name: string, last_name: string, email: 
   } else {
     const user: {user: User} = await res.json();
     dispatch(setUser(user));
-    alert(`logged in ${user.user.firstName}`);
+    router.navigate("/home");
   }
 };
 
@@ -51,7 +49,6 @@ export const signInUser = (credentials: {email: string, password: string}): Thun
   });
   if (res.status === 401 /* unauthorized */) {
     const errors: {errors: string[]} = (await res.json());
-    console.log(errors);
     dispatch(setSignInErrors(errors));
   } else if (res.status >= 500 /* server error */) {
     dispatch(setSignInErrors({errors: ["our servers are currently offline. note that they turn themselves off, so they may take three minutes or more to turn back on."]}));
@@ -60,8 +57,17 @@ export const signInUser = (credentials: {email: string, password: string}): Thun
   } else {
     const user: {user: User} = await res.json();
     dispatch(setUser(user));
-    alert(`logged in ${user.user.firstName}`);
-    router.navigate("/home")
+    router.navigate("/home");
+  }
+};
+
+export const signOutUser = (): Thunk => async (dispatch: Dispatch) => {
+  const res = await load('/api/session', {method: 'DELETE'});
+  if (!res.ok) {
+    alert('failed to sign out.');
+  } else {
+    dispatch(clearUser());
+    router.navigate("/");
   }
 };
 
