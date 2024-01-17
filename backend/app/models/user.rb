@@ -43,7 +43,6 @@ class User < ApplicationRecord
   end
 
   def ensure_session_token
-    p 'e'
     self.session_token ||= generate_unique_session_token
   end
 end

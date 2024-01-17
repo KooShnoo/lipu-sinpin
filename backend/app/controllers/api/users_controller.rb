@@ -2,12 +2,6 @@
 class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
-    p @user
-    p "ata saka o:"
-    p @user.password
-    p user_params[:password]
-    # debugger
-    p ":/"
     if @user.save
       signin!(@user)
       render :show

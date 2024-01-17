@@ -1,11 +1,9 @@
-// import SignInForm from '../SignInForm/SignInForm';
-// import './Feed.css';
+import Navbar from "../Navbar/Navbar";
 
 export default function Feed() {
-  
   return (
     <>
-    Feed
+      <Navbar />
     </>
   );
 }
