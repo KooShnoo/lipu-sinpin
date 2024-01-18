@@ -1,11 +1,13 @@
 import { ThunkAction, UnknownAction, configureStore } from '@reduxjs/toolkit';
 import sessionReducer from './session';
 import errorReducer from './error';
+import postReducer from './post';
 
 export const store = configureStore({
   reducer: {
     session: sessionReducer,
     errors: errorReducer,
+    posts: postReducer,
   },
 });
 

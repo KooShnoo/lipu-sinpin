@@ -1,6 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-// import { load } from "../api/csrf";
-// import { Thunk } from "./store";
 
 interface ErrorsState {
   signIn: string[] | null;

@@ -1,11 +1,19 @@
+import { User } from "../state/session";
 
-/** fetches the csrf token and puts it in the session storage */
+/** fetches a csrf token and puts it in the session storage */
 export async function restoreCSRF() {
   const response = await load("/api/session", {csrfHeader: false});
   const csrfToken = response.headers.get("X-CSRF-Token");
   console.assert(!!csrfToken, "backend didn't give a csrf token.");
   if (csrfToken) sessionStorage.setItem("X-CSRF-Token", csrfToken);
   return response;
+}
+
+/** uses the session token to get the current user */
+export async function getCurrentUser(): Promise<User | null> {
+  const res = await restoreCSRF();
+  const { user } = await res.json();
+  return user;
 }
 
 /** wrapper around {@linkcode fetch} */

@@ -1,16 +1,50 @@
-import { useDispatch } from "react-redux";
-import { signOutUser } from "../../state/session";
-import { Dispatch } from "../../state/store";
+import { useSelector } from "react-redux";
+import { State } from "../../state/store";
 import Logo from "../Logo/Logo";
+import { demoPFP_URL } from "../../utils";
+import { useEffect, useState } from "react";
+import Popover from "./Popover";
+import style from "./Navbar.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  const dispatch: Dispatch = useDispatch();
+  const user = useSelector((state: State) => state.session.user);
+  const navigate = useNavigate();
+  if (!user) {
+    navigate('/');
+    return;
+  }
+  const windowOnClick = (e: MouseEvent) => {
+    if (!(e.target instanceof Element)) return;
+    if (e.target.id !== "pfp") {
+      setShowPopover(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("click", windowOnClick);
+    return () => window.removeEventListener("click", windowOnClick);
+  }, []);
+
+  const [showPopover, setShowPopover] = useState(false);
+  const togglePopover = () => setShowPopover(!showPopover);
+  
   return (
     <>
-      <div className="flex items-center gap-4">
-        <Logo />
-        <p>Feed</p>
-        <button onClick={() => dispatch(signOutUser())}>logout</button>
+      <div className="p-2 flex justify-between bg-white dark:bg-fb-nav">
+        <div className="flex items-center gap-4">
+          <Logo />
+          <p>Search</p>
+          <button onClick={() => alert("no results lol")}>Submit</button>
+        </div>
+        <div className="flex items-center gap-4">
+          <p> {`Welcome, ${user.firstName}!`}</p>
+          <div className="relative">
+            <img id="pfp" src={demoPFP_URL} onClick={togglePopover} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" />
+            <div className={style.popover}>
+              {showPopover && <Popover />}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

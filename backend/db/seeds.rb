@@ -9,6 +9,7 @@
 #   end
 
 User.destroy_all
+Post.destroy_all
 
 User.create!(
   first_name: 'Demo',

@@ -8,6 +8,10 @@ export default {
     extend: {
       colors: {
         "fb-blue": "#1877F2",
+        "fb-nav": "#242526",
+        "fb-wash": "#18191A",
+        "fb-wash-light": "#F0F2F5",
+
       },
     },
   },

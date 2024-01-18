@@ -97,6 +97,8 @@ GEM
     crass (1.0.6)
     date (3.3.4)
     debug_inspector (1.2.0)
+    dockerfile-rails (1.6.3)
+      rails (>= 3.0.0)
     drb (2.2.0)
       ruby2_keywords
     error_highlight (0.6.0)
@@ -218,6 +220,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   byebug
+  dockerfile-rails (>= 1.6)
   error_highlight
   jbuilder
   pg (~> 1.1)
