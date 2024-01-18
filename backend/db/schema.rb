@@ -14,6 +14,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_11_204707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "analytics", force: :cascade do |t|
+    t.integer "page_serves"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "author_id", null: false
     t.bigint "post_id", null: false

@@ -35,5 +35,11 @@ class CreateTables < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    create_table :analytics do |t|
+      t.integer :page_serves
+
+      t.timestamps
+    end
   end
 end

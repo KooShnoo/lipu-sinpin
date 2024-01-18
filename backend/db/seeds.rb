@@ -17,3 +17,5 @@ User.create!(
   email: 'demo@user.com',
   password: 'password'
 )
+
+Analytic.create! page_serves: 0
