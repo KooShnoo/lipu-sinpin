@@ -5,15 +5,10 @@ import { demoPFP_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import Popover from "./Popover";
 import style from "./Navbar.module.css";
-import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state: State) => state.session.user);
-  const navigate = useNavigate();
-  if (!user) {
-    navigate('/');
-    return;
-  }
+
   const windowOnClick = (e: MouseEvent) => {
     if (!(e.target instanceof Element)) return;
     if (e.target.id !== "pfp") {
@@ -27,10 +22,11 @@ export default function Navbar() {
 
   const [showPopover, setShowPopover] = useState(false);
   const togglePopover = () => setShowPopover(!showPopover);
-  
+
+  if (!user) return null;
   return (
     <>
-      <div className="p-2 flex justify-between bg-white dark:bg-fb-nav">
+      <div className="p-2 flex justify-between bg-white dark:bg-fb-primary border-b-2 border-fb-primary-light dark:border-fb-primary">
         <div className="flex items-center gap-4">
           <Logo />
           <p>Search</p>
