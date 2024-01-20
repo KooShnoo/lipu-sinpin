@@ -5,6 +5,7 @@ import { demoPFP_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import Popover from "./Popover";
 import style from "./Navbar.module.css";
+import Theme from "./Theme";
 
 export default function Navbar() {
   const user = useSelector((state: State) => state.session.user);
@@ -33,6 +34,7 @@ export default function Navbar() {
           <button onClick={() => alert("no results lol")}>Submit</button>
         </div>
         <div className="flex items-center gap-4">
+          <Theme />
           <p> {`Welcome, ${user.firstName}!`}</p>
           <div className="relative">
             <img id="pfp" src={demoPFP_URL} onClick={togglePopover} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" />

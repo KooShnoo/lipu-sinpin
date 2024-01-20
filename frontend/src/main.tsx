@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { store } from './state/store.ts';
 import './index.css';
 import './reset.css';
-import './theme.ts';
 import Home from './components/Home/Home.tsx';
 import { setUser } from './state/session.ts';
 import Feed from './components/Feed/Feed.tsx';
