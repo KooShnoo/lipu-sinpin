@@ -8,14 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require "open-uri"
+
 User.destroy_all
 Post.destroy_all
 
-User.create!(
+demo_user = User.create!(
   first_name: 'Demo',
   last_name: 'User',
   email: 'demo@user.com',
   password: 'password'
 )
+
+test_post = Post.create!(author_id: demo_user.id, body: "blah blah! i love lipu sinpin!! :D")
+test_post.photo.attach(io: URI.open("https://lipu-sinpin-seeds.s3.us-west-1.amazonaws.com/Screenshot+2023-12-19+at+18.23.32.png"), filename: "squirt.png")
 
 Analytic.create! page_serves: 0

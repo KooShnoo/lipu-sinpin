@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: 'esnext',
-    outDir: '../backend/public',
+    outDir: '../backend/public_',
     emptyOutDir: true,
   },
   server: {

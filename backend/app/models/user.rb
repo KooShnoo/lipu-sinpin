@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :pfp
   before_validation :ensure_session_token
 
   validates :first_name, presence: true, length: { maximum: 40 }

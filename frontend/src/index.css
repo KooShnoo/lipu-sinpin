@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-i {
+.fa-triangle-exclamation {
   color: red;
   @apply absolute right-3 top-7
 }

@@ -26,7 +26,7 @@ export default function Navbar() {
   if (!user) return null;
   return (
     <>
-      <div className="p-2 flex justify-between bg-white dark:bg-fb-primary border-b-2 border-fb-primary-light dark:border-fb-primary">
+      <div className="w-screen p-2 fixed top-0 z-10 flex justify-between bg-white dark:bg-fb-primary border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
         <div className="flex items-center gap-4">
           <Logo />
           <p>Search</p>
@@ -42,6 +42,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      <div className="w-screen h-[4.5rem]" />
     </>
   );
 }

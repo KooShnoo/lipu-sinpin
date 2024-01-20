@@ -9,7 +9,8 @@ export interface Post {
   body: string;
   createdAt: string;
   updatedAt: string;
-  author : User
+  photoUrl: string | null;
+  author : User;
 }
 
 type PostsState = Record<number, Post>
@@ -30,7 +31,7 @@ export const loadPosts = (): Thunk => async (dispatch: Dispatch) => {
     byIds[post.id] = post;
     return byIds;
   },{});
-  dispatch(addPosts(posts));
+  dispatch(setPosts(posts));
 };
 
 export const postPost = (body: string): Thunk => async (dispatch: Dispatch, getState) => {
@@ -48,6 +49,11 @@ export const postPost = (body: string): Thunk => async (dispatch: Dispatch, getS
   dispatch(addPost(post));
 };
 
+export const deletePost = (postId: number): Thunk => async (dispatch: Dispatch) => {
+  await load(`/api/posts/${postId}`, {method: 'DELETE'});
+  dispatch(removePost(postId));
+};
+
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -55,8 +61,9 @@ export const postsSlice = createSlice({
     setPosts: (_state, action: PayloadAction<Record<number, Post>>) => ({...action.payload}),
     addPosts: (state, action: PayloadAction<Record<number, Post>>) => ({...state, ...action.payload}),
     addPost: (state, action: PayloadAction<Post>) => ({...state, [action.payload.id]: action.payload}),
+    removePost: (state, action: PayloadAction<number>) => {delete state[action.payload];},
   },
 });
 
-export const { setPosts, addPosts, addPost } = postsSlice.actions;
+export const { setPosts, addPosts, addPost, removePost } = postsSlice.actions;
 export default postsSlice.reducer;

@@ -24,5 +24,6 @@ export default {
     preflight: false,
   },
   plugins: [],
+  darkMode: 'class',
 };
 

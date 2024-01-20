@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "../../state/store";
 import { loadPosts, selectPostIds } from "../../state/post";
 import Post from "../Post/Post";
-import PostForm from "../Post/PostForm";
+import PostFormDummy from "../Post/PostFormDummy";
 
 export default function Feed() {
   const dispatch: Dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function Feed() {
     <>
       <div className="w-full mx-auto max-w-[42rem] flex flex-col gap-4">
 
-        <PostForm />
+        <PostFormDummy />
         {postIds.toReversed().map(postId => (
           <Post key={postId} postId={postId}/>
         ))}

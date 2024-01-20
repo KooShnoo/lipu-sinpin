@@ -5,8 +5,9 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    # TODO: post params
-    @post = Post.new(post_params)
+    require_signed_in
+    # debugger
+    @post = Post.new(post_params.merge(author_id: current_user.id))
     if @post.save
       render :show
     else
@@ -16,8 +17,6 @@ class Api::PostsController < ApplicationController
 
   def show
     @post = Post.find_by(id: params[:id])
-    p @post
-    p "wakla :)"
     render :show
   end
 
@@ -25,10 +24,16 @@ class Api::PostsController < ApplicationController
   end
 
   def destroy
+    require_signed_in
+    @post = Post.find_by(id: params[:id])
+    render json: { errors: ["Cannot delete other user's post"] } if @post.author_id != current_user.id
+    return if @post.destroy
+
+    render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
   end
 
   def post_params
-    params.require(:post).permit(:author_id, :body)
+    params.require(:post).permit(:body)
   end
 end
 # rubocop:enable Style/ClassAndModuleChildren
