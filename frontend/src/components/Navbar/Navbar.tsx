@@ -11,7 +11,7 @@ import { fetchingAtom } from "../../state/atoms";
 
 export default function Navbar() {
   const user = useSelector((state: State) => state.session.user);
-  const isLoading = useAtomValue(fetchingAtom)
+  const isLoading = useAtomValue(fetchingAtom);
 
   const windowOnClick = (e: MouseEvent) => {
     if (!(e.target instanceof Element)) return;
