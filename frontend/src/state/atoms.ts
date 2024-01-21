@@ -3,6 +3,8 @@ import { Post } from './post';
 
 export const jotaiStore = createStore();
 
+export const fetchingAtom = atom<boolean>(false);
+
 // normal developers watching javascript developers try to create a tagged union:
 // [!["Look What They Need to Mimic a Fraction of Our Power" meme](https://knowyourmeme.com/memes/look-what-they-need-to-mimic-a-fraction-of-our-power)](https://i.kym-cdn.com/entries/icons/original/000/037/360/coverpower.jpg)
 

@@ -6,9 +6,12 @@ import { useEffect, useState } from "react";
 import Popover from "./Popover";
 import style from "./Navbar.module.css";
 import Theme from "./Theme";
+import { useAtomValue } from "jotai";
+import { fetchingAtom } from "../../state/atoms";
 
 export default function Navbar() {
   const user = useSelector((state: State) => state.session.user);
+  const isLoading = useAtomValue(fetchingAtom)
 
   const windowOnClick = (e: MouseEvent) => {
     if (!(e.target instanceof Element)) return;
@@ -30,8 +33,7 @@ export default function Navbar() {
       <div className="w-screen p-2 fixed top-0 z-10 flex justify-between bg-white dark:bg-fb-primary border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
         <div className="flex items-center gap-4">
           <Logo />
-          <p>Search</p>
-          <button onClick={() => alert("no results lol")}>Submit</button>
+          {isLoading && <i className=" text-2xl fa-solid fa-spinner fa-spin" />}
         </div>
         <div className="flex items-center gap-4">
           <Theme />
