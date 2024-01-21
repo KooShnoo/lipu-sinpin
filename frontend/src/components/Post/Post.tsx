@@ -3,13 +3,13 @@ import { Dispatch, State } from "../../state/store";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { deletePost } from "../../state/post";
-import { postFormType, postModalAtom } from "../../state/atoms";
-import { useAtom } from "jotai";
+import { postFormEDIT, postModalAtom } from "../../state/atoms";
+import { useSetAtom } from "jotai";
 dayjs.extend(relativeTime);
 
 export default function Post({ postId }: {postId: number}) {
   const dispatch: Dispatch = useDispatch();
-  const [_, setPostModal] = useAtom(postModalAtom);
+  const setPostModal = useSetAtom(postModalAtom);
   const post = useSelector((state: State) => state.posts[postId]);
   const postTime = dayjs(post.createdAt).fromNow();
   const user = useSelector((state: State) => state.session.user);
@@ -29,7 +29,7 @@ export default function Post({ postId }: {postId: number}) {
           <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>dispatch(deletePost(post.id))}>
             <i className="fa-solid fa-trash" />
           </button>
-          <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>setPostModal(postFormType.EDIT)}>
+          <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>setPostModal(postFormEDIT(post))}>
             <i className="fa-solid fa-pen-to-square" />
           </button>
         </div>)

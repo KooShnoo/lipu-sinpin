@@ -3,6 +3,7 @@ import { load } from "../api/csrf";
 import { Thunk } from "./store";
 import { setSignInErrors, setSignUpErrors } from "./error";
 import { router } from "../main";
+import { jotaiStore, redirectAtom } from "./atoms";
 
 export interface User {
   id: number;
@@ -23,6 +24,8 @@ const initialState: SessionState = {
   user: null,
 };
 
+// if only i could use react-query...
+
 export const signUpUser = (user: {first_name: string, last_name: string, email: string, password: string}): Thunk => async (dispatch: Dispatch) => {
   const res = await load('/api/users', {
     method: 'POST',
@@ -31,14 +34,11 @@ export const signUpUser = (user: {first_name: string, last_name: string, email: 
   if (res.status === 422 /* bad data */) {
     const errors: {errors: string[]} = (await res.json());
     dispatch(setSignUpErrors(errors));
-  } else if (res.status >= 500 /* server error */) {
-    dispatch(setSignUpErrors({errors: ["our servers are currently offline. note that they turn themselves off, so they may take three minutes or more to turn back on."]}));
   } else if (!res.ok) {
     dispatch(setSignUpErrors({errors: ["an unexpected error occured. please try to sign in again."]}));
   } else {
-    const user: {user: User} = await res.json();
-    dispatch(setUser(user));
-    router.navigate("/home");
+    const { user }: {user: User} = await res.json();
+    finishSignInUser(user, dispatch);
   }
 };
 
@@ -50,15 +50,18 @@ export const signInUser = (credentials: {email: string, password: string}): Thun
   if (res.status === 401 /* unauthorized */) {
     const errors: {errors: string[]} = (await res.json());
     dispatch(setSignInErrors(errors));
-  } else if (res.status >= 500 /* server error */) {
-    dispatch(setSignInErrors({errors: ["our servers are currently offline. note that they turn themselves off, so they may take three minutes or more to turn back on."]}));
   } else if (!res.ok) {
     dispatch(setSignInErrors({errors: ["an unexpected error occured. please try to sign in again."]}));
   } else {
-    const user: {user: User} = await res.json();
-    dispatch(setUser(user));
-    router.navigate("/home");
+    const { user }: {user: User} = await res.json();
+    finishSignInUser(user, dispatch);
   }
+};
+
+const finishSignInUser = (user: User, dispatch: Dispatch) => {
+  dispatch(setUser({ user }));
+  const redirect = jotaiStore.get(redirectAtom);
+  router.navigate(redirect || "/home");
 };
 
 export const signOutUser = (): Thunk => async (dispatch: Dispatch) => {

@@ -49,6 +49,21 @@ export const postPost = (body: string): Thunk => async (dispatch: Dispatch, getS
   dispatch(addPost(post));
 };
 
+export const patchPost = (post: Post): Thunk => async (dispatch: Dispatch, getState) => {
+  const user = getState().session.user;
+  if (!user) return;
+  const res = await load(`/api/posts/${post.id}`, {
+    method: "PATCH", 
+    body: JSON.stringify(post),
+  });
+  if (!res.ok) {
+    alert('failed to edit post.');
+    return;
+  }
+  const postBack: Post = await res.json();
+  dispatch(editPost(postBack));
+};
+
 export const deletePost = (postId: number): Thunk => async (dispatch: Dispatch) => {
   await load(`/api/posts/${postId}`, {method: 'DELETE'});
   dispatch(removePost(postId));
@@ -61,9 +76,10 @@ export const postsSlice = createSlice({
     setPosts: (_state, action: PayloadAction<Record<number, Post>>) => ({...action.payload}),
     addPosts: (state, action: PayloadAction<Record<number, Post>>) => ({...state, ...action.payload}),
     addPost: (state, action: PayloadAction<Post>) => ({...state, [action.payload.id]: action.payload}),
+    editPost: (state, action: PayloadAction<Post>) => {state[action.payload.id] = action.payload;},
     removePost: (state, action: PayloadAction<number>) => {delete state[action.payload];},
   },
 });
 
-export const { setPosts, addPosts, addPost, removePost } = postsSlice.actions;
+export const { setPosts, addPosts, addPost, removePost, editPost } = postsSlice.actions;
 export default postsSlice.reducer;
