@@ -1,7 +1,7 @@
 # rubocop:disable Style/ClassAndModuleChildren
 class Api::PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc).limit(100)
   end
 
   def create
@@ -23,6 +23,8 @@ class Api::PostsController < ApplicationController
   def update
     require_signed_in
     @post = Post.find_by(id: params[:id])
+    p 'hehehehehahahahahh'
+    p post_params
     render json: { errors: ["Cannot edit other user's post"] } if @post.author_id != current_user.id
     unless @post.update(post_params)
       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
@@ -43,7 +45,7 @@ class Api::PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:body)
+    params.require(:post).permit(:body, :photo)
   end
 end
 # rubocop:enable Style/ClassAndModuleChildren

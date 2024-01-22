@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { demoPFP_URL, inputOnChange } from "../../utils";
 import { Dispatch, State } from "../../state/store";
 import { patchPost, postPost } from "../../state/post";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PostFormData, postFormNONE, postModalAtom } from "../../state/atoms";
 import { useSetAtom } from "jotai";
 
@@ -12,24 +12,26 @@ export default function PostForm({ type }: {type: PostFormData}) {
   const setPostModal = useSetAtom(postModalAtom);
   const user = useSelector((state: State) => state.session.user);
   const [body, setBody] = useState(isEditForm ? type.post.body : '');
+  const inputElement = useRef<HTMLInputElement | null>(null);
 
   // i wish if statements were expressions. that would make this a lot cleaner.
   /* eslint-disable indent */
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = /* if */ isEditForm ? // {
-    e => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault();
+      if (!user) return null;
       setBody('');
       setPostModal(postFormNONE());
-      dispatch(patchPost({ ...type.post, body }));
-    }:
-//} else {
-    e => {
-      e.preventDefault();
-      setBody('');
-      setPostModal(postFormNONE());
-      dispatch(postPost(body));
+      const fd = new FormData();
+      fd.append('post[body]', body);
+      if (inputElement.current?.files?.length === 1) fd.append('post[photo]', inputElement.current.files[0]);
+      if (isEditForm) {
+        fd.append('post[id]', type.post.id.toFixed());
+        dispatch(patchPost(fd));
+      } else {
+        fd.append('post[author_id]', user.id.toFixed());
+        dispatch(postPost(fd));
+      }
     };
-//}   
   /* eslint-enable indent */
   if (!user) return null;
   return (
@@ -48,6 +50,7 @@ export default function PostForm({ type }: {type: PostFormData}) {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <textarea placeholder={`What's on your mind, ${user.firstName}?`} value={body} onChange={inputOnChange(setBody)} className="w-full text-2xl max-h-[500px] dark:bg-fb-primary"/>
+              <input type="file" ref={inputElement} />
               <button className="bg-fb-blue rounded-md p-2 text-sm">{ isEditForm ? "Save" : "Post"}</button>
             </form>
           </div>

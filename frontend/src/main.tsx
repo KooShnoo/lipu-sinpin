@@ -13,6 +13,7 @@ import { setUser } from './state/session.ts';
 import Feed from './components/Feed/Feed.tsx';
 import Users from './components/User/Users.tsx';
 import { jotaiStore } from './state/atoms.ts';
+import Profile from './components/User/Profile.tsx';
 
 const user = await getCurrentUser();
 if (user) reduxStore.dispatch(setUser({user}));
@@ -32,6 +33,11 @@ export const router = createBrowserRouter([
     path: 'users',
     element: <Home />,
     children: [{index: true, element: <Users />}],
+  },
+  {
+    path: 'users/:userId',
+    element: <Home />,
+    children: [{index: true, element: <Profile />}],
   },
 ]);
 

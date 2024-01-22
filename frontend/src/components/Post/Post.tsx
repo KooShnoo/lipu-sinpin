@@ -12,6 +12,8 @@ export default function Post({ postId }: {postId: number}) {
   const setPostModal = useSetAtom(postModalAtom);
   const post = useSelector((state: State) => state.posts[postId]);
   const postTime = dayjs(post.createdAt).fromNow();
+  const editTime = dayjs(post.updatedAt).fromNow();
+  const edited = !dayjs(post.createdAt).isSame(dayjs(post.updatedAt), 'minute');
   const user = useSelector((state: State) => state.session.user);
   
 
@@ -22,6 +24,7 @@ export default function Post({ postId }: {postId: number}) {
         <div>
           <p>{post.author.firstName} {post.author.lastName} says:</p>
           <p className="text-xs text-fb-secondary-text-light dark:text-fb-secondary-text">{postTime}</p>
+          {edited && <p className="text-xs italic text-fb-secondary-text-light dark:text-fb-secondary-text">edited {editTime}</p>}
           <p className="text-xl">{post.body}</p>
           {post.photoUrl && <img src={post.photoUrl}/>}
         </div>

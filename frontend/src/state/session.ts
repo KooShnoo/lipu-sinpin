@@ -4,17 +4,7 @@ import { Thunk } from "./store";
 import { setSignInErrors, setSignUpErrors } from "./error";
 import { router } from "../main";
 import { jotaiStore, redirectAtom } from "./atoms";
-
-export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthday: string;
-  status: string;
-  location: string;
-  bio: string;
-}
+import { User } from "./user";
 
 interface SessionState {
   user: User | null;

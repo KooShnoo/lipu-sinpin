@@ -1,7 +1,7 @@
 import { Dispatch, PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { load } from "../api/csrf";
 import { State, Thunk } from "./store";
-import { User } from "./session";
+import { User } from "./user";
 
 export interface Post {
   id: number;
@@ -34,27 +34,29 @@ export const loadPosts = (): Thunk => async (dispatch: Dispatch) => {
   dispatch(setPosts(posts));
 };
 
-export const postPost = (body: string): Thunk => async (dispatch: Dispatch, getState) => {
+export const postPost = (post: FormData): Thunk => async (dispatch: Dispatch, getState) => {
   const user = getState().session.user;
   if (!user) return;
   const res = await load('/api/posts', {
     method: "POST", 
-    body: JSON.stringify({author_id: user.id, body}),
+    jsonHeader: false,
+    body: post,
   });
   if (!res.ok) {
     alert('failed to post post.');
     return;
   }
-  const post: Post = await res.json();
-  dispatch(addPost(post));
+  const postBack: Post = await res.json();
+  dispatch(addPost(postBack));
 };
 
-export const patchPost = (post: Post): Thunk => async (dispatch: Dispatch, getState) => {
+export const patchPost = (post: FormData): Thunk => async (dispatch: Dispatch, getState) => {
   const user = getState().session.user;
   if (!user) return;
-  const res = await load(`/api/posts/${post.id}`, {
+  const res = await load(`/api/posts/${post.get('post[id]')}`, {
     method: "PATCH", 
-    body: JSON.stringify(post),
+    jsonHeader: false,
+    body: post,
   });
   if (!res.ok) {
     alert('failed to edit post.');

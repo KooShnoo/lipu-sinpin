@@ -1,4 +1,4 @@
 .popover {
   position: absolute;
-  transform: translate(-100%) translate(3rem);
+  transform: translate(-100%) translate(3rem, 1.25rem);
 }

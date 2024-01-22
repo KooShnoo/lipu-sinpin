@@ -2,13 +2,16 @@ import { ThunkAction, UnknownAction, configureStore } from '@reduxjs/toolkit';
 import sessionReducer from './session';
 import errorReducer from './error';
 import postReducer from './post';
+import userReducer from './user';
 
 export const store = configureStore({
   reducer: {
     session: sessionReducer,
     errors: errorReducer,
     posts: postReducer,
+    users: userReducer,
   },
+  devTools: import.meta.env.PROD,
 });
 
 export type State = ReturnType<typeof store.getState>
