@@ -7,13 +7,14 @@ import { postFormEDIT, postModalAtom } from "../../state/atoms";
 import { useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { demoPFP_URL } from "../../utils";
+import { Post } from "../../state/post";
 dayjs.extend(relativeTime);
 
-export default function Post({ postId }: {postId: number}) {
+export default function Post({ post }: {post: Post}) {
   const dispatch: Dispatch = useDispatch();
   const navigate= useNavigate();
   const setPostModal = useSetAtom(postModalAtom);
-  const post = useSelector((state: State) => state.posts[postId]);
+  // const post = useSelector((state: State) => state.posts[postId]);
   const postTime = dayjs(post.createdAt).fromNow();
   const editTime = dayjs(post.updatedAt).fromNow();
   const edited = !dayjs(post.createdAt).isSame(dayjs(post.updatedAt), 'minute');

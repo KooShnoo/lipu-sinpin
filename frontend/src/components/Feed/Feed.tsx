@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "../../state/store";
-import { loadPosts, selectPostIds } from "../../state/post";
+import { loadPosts, selectPosts } from "../../state/post";
 import Post from "../Post/Post";
 import PostFormDummy from "../Post/PostFormDummy";
 
 export default function Feed() {
   const dispatch: Dispatch = useDispatch();
-  const postIds = useSelector(selectPostIds);
+  const posts = useSelector(selectPosts);
   useEffect(() => {
     dispatch(loadPosts());
   }, []);
@@ -16,8 +16,8 @@ export default function Feed() {
       <div className="w-full mx-auto mt-4 max-w-[42rem] flex flex-col gap-4">
 
         <PostFormDummy />
-        {postIds.toReversed().map(postId => (
-          <Post key={postId} postId={postId}/>
+        {posts.toReversed().map(post => (
+          <Post key={post.id} post={post}/>
         ))}
         <div className="text-center py-[25vh]">
           <h2 className="text-4xl font-bold">you're all caught up!</h2>

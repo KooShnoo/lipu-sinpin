@@ -9,19 +9,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     get :analytics, to: 'analytics#show'
-    resources :users, only: [:index, :show, :create, :update] do
-      resources :posts, only: [:index]
-      resources :comments, only: [:index]
-    end
-
+    
+    resources :users, only: [:index, :show, :create, :update]
     resource :session, only: [:show, :create, :destroy]
-
-    resources :posts, only: [:index, :show, :create, :update, :destroy] do
-      resources :comments, only: [:index, :create]
-    end
-
+    resources :posts, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:show, :create, :update, :destroy]
-
     resources :friends, only: [:create, :destroy]
   end
 

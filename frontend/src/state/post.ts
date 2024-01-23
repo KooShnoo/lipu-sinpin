@@ -17,7 +17,7 @@ type PostsState = Record<number, Post>
 
 const initialState: PostsState = {};
 
-export const selectPostIds = createSelector((state: State) => state.posts, posts => Object.values(posts).map(post => post.id));
+export const selectPosts = createSelector((state: State) => state.posts, posts => Object.values(posts));
 
 export const loadPosts = (): Thunk => async (dispatch: Dispatch) => {
   const res = await load('/api/posts');

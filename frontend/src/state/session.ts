@@ -27,7 +27,7 @@ export const signUpUser = (user: {first_name: string, last_name: string, email: 
   } else if (!res.ok) {
     dispatch(setSignUpErrors({errors: ["an unexpected error occured. please try to sign in again."]}));
   } else {
-    const { user }: {user: User} = await res.json();
+    const user: User = await res.json();
     finishSignInUser(user, dispatch);
   }
 };
@@ -43,12 +43,13 @@ export const signInUser = (credentials: {email: string, password: string}): Thun
   } else if (!res.ok) {
     dispatch(setSignInErrors({errors: ["an unexpected error occured. please try to sign in again."]}));
   } else {
-    const { user }: {user: User} = await res.json();
+    const user: User = await res.json();
     finishSignInUser(user, dispatch);
   }
 };
 
 const finishSignInUser = (user: User, dispatch: Dispatch) => {
+  console.log('usah', user);
   dispatch(setUser({ user }));
   const redirect = jotaiStore.get(redirectAtom);
   router.navigate(redirect || "/home");

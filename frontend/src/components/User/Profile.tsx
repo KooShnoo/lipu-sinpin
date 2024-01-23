@@ -4,6 +4,8 @@ import { Dispatch, State } from "../../state/store";
 import { useEffect } from "react";
 import { loadUsers } from "../../state/user";
 import Cover from "./Cover";
+import Post from "../Post/Post";
+import InfoPanel from "./InfoPanel";
 
 export default function Profile() {
   const dispatch: Dispatch = useDispatch();
@@ -18,8 +20,24 @@ export default function Profile() {
   if (!user) return "loading...";
   return (
     <>
-      <Cover />
-      <h1 className="text-4xl text-center">🚜👷‍♂️🚧 WIP page! 🚧👷‍♂️🚜 <br /> this profile page under construction. <br />profile for {user.firstName} {user.lastName}!</h1>
+      <div className="max-w-[70rem] mx-auto mb-8 w-full relative">
+        <Cover />
+        <div className="flex gap-8">
+
+          <div className="w-full flex flex-col gap-4">
+            <InfoPanel user={user} />
+          </div>
+
+          <div className="w-full flex flex-col gap-4">
+            <div className="bg-white drop-shadow-md dark:bg-fb-primary p-2 flex gap-4 rounded-lg text-xl">Posts</div>
+            {user.posts.toReversed().map(post => {
+              post = {...post, author: user};
+              return <Post key={post.id} post={post}/>;
+            })}
+          </div>
+          
+        </div>
+      </div>
     </>
   );
 }

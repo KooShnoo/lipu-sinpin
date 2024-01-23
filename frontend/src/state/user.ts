@@ -1,6 +1,7 @@
 import { Dispatch, PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { load } from "../api/csrf";
 import { State, Thunk } from "./store";
+import { Post } from "./post";
 
 export interface User {
   id: number;
@@ -15,6 +16,7 @@ export interface User {
   updatedAt: string;
   pfpUrl: string;
   coverUrl: string;
+  posts: Post[];
 }
 
 type UsersState = Record<number, User>
