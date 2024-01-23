@@ -6,7 +6,6 @@ class Api::PostsController < ApplicationController
 
   def create
     require_signed_in
-    # debugger
     @post = Post.new(post_params.merge(author_id: current_user.id))
     if @post.save
       render :show
@@ -23,25 +22,23 @@ class Api::PostsController < ApplicationController
   def update
     require_signed_in
     @post = Post.find_by(id: params[:id])
-    p 'hehehehehahahahahh'
-    p post_params
     render json: { errors: ["Cannot edit other user's post"] } if @post.author_id != current_user.id
-    unless @post.update(post_params)
+    if @post.update(post_params)
+      render :show
+    else
       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
-      return
     end
-    render :show
   end
 
   def destroy
     require_signed_in
     @post = Post.find_by(id: params[:id])
     render json: { errors: ["Cannot delete other user's post"] } if @post.author_id != current_user.id
-    unless @post.destroy
+    if @post.destroy
+      render :show
+    else
       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
-      return
     end
-    render :show
   end
 
   def post_params

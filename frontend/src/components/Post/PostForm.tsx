@@ -12,6 +12,7 @@ export default function PostForm({ type }: {type: PostFormData}) {
   const setPostModal = useSetAtom(postModalAtom);
   const user = useSelector((state: State) => state.session.user);
   const [body, setBody] = useState(isEditForm ? type.post.body : '');
+  const [error, setError] = useState('');
   const inputElement = useRef<HTMLInputElement | null>(null);
 
   // i wish if statements were expressions. that would make this a lot cleaner.
@@ -19,8 +20,15 @@ export default function PostForm({ type }: {type: PostFormData}) {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault();
       if (!user) return null;
-      setBody('');
-      setPostModal(postFormNONE());
+      if (body.length <= 0) {
+        setError('cannot post empty post.');
+        return;
+      }
+      if (body.length >= 1000) {
+        setError('post is too long.');
+        return;
+      }
+
       const fd = new FormData();
       fd.append('post[body]', body);
       if (inputElement.current?.files?.length === 1) fd.append('post[photo]', inputElement.current.files[0]);
@@ -31,6 +39,8 @@ export default function PostForm({ type }: {type: PostFormData}) {
         fd.append('post[author_id]', user.id.toFixed());
         dispatch(postPost(fd));
       }
+      setBody('');
+      setPostModal(postFormNONE());
     };
   /* eslint-enable indent */
   if (!user) return null;
@@ -51,6 +61,7 @@ export default function PostForm({ type }: {type: PostFormData}) {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <textarea placeholder={`What's on your mind, ${user.firstName}?`} value={body} onChange={inputOnChange(setBody)} className="w-full text-2xl max-h-[500px] dark:bg-fb-primary"/>
               <input type="file" ref={inputElement} />
+              {error && <p className="text-red-500">{error}</p>}
               <button className="bg-fb-blue rounded-md p-2 text-sm">{ isEditForm ? "Save" : "Post"}</button>
             </form>
           </div>

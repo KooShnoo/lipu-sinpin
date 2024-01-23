@@ -11,7 +11,7 @@ export const store = configureStore({
     posts: postReducer,
     users: userReducer,
   },
-  devTools: import.meta.env.PROD,
+  // devTools: import.meta.env.PROD,
 });
 
 export type State = ReturnType<typeof store.getState>

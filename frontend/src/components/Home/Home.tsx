@@ -23,7 +23,7 @@ export default function Home() {
     <>
       <div id="background" className="w-screen min-h-screen bg-fb-wash-light dark:bg-fb-wash fixed -z-10" />
       {postModal.kind === "NONE" ? null : <PostForm type={postModal} />}
-      <div className="w-screen min-h-screen bg-fb-wash-light dark:bg-fb-wash dark:text-white flex flex-col gap-4">
+      <div className="w-screen min-h-screen bg-fb-wash-light dark:bg-fb-wash dark:text-white">
         <Navbar />
         <Outlet />
       </div>

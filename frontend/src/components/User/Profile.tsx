@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Dispatch, State } from "../../state/store";
 import { useEffect } from "react";
 import { loadUsers } from "../../state/user";
+import Cover from "./Cover";
 
 export default function Profile() {
   const dispatch: Dispatch = useDispatch();
@@ -17,7 +18,8 @@ export default function Profile() {
   if (!user) return "loading...";
   return (
     <>
-      <h1 className="text-4xl text-center">profile for {user.firstName} {user.lastName}!</h1>
+      <Cover />
+      <h1 className="text-4xl text-center">🚜👷‍♂️🚧 WIP page! 🚧👷‍♂️🚜 <br /> this profile page under construction. <br />profile for {user.firstName} {user.lastName}!</h1>
     </>
   );
 }

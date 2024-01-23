@@ -2,9 +2,8 @@ import { useState } from "react";
 
 export default function Theme() {
 
-  const [theme, setTheme_] = useState(localStorage.getItem('theme'));
+  const [theme, setTheme_] = useState<Theme>(localStorage.getItem('theme') as Theme);
   type Theme = "light" | "dark" | null
-  // copied from https://tailwindcss.com/docs/dark-mode#supporting-system-preference-and-manual-selection
   const setTheme = (theme: Theme) => {
     switch (theme) {
     case "dark":
@@ -25,7 +24,8 @@ export default function Theme() {
     setTheme_(theme);
   };
 
-  const next = () => {
+  const next: React.MouseEventHandler<HTMLButtonElement> = e => {
+    e.stopPropagation();
     switch (localStorage.getItem('theme')) {
     case "dark"  : return setTheme("light");
     case "light" : return setTheme(null);
@@ -42,8 +42,11 @@ export default function Theme() {
   };
   return (
     <>
-      <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" title="theme" onClick={next}>
-        <i className={`fa-solid ${icon()}`} />
+      <button className="w-full p-1 flex gap-2 justify-left items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={next}>
+        <div className="flex justify-center items-center bg-inherit h-8 w-8 brightness-200 rounded-full">
+          <i className={`fa-solid ${icon()}`} />
+        </div>
+          Change Theme
       </button>
     </>
   );

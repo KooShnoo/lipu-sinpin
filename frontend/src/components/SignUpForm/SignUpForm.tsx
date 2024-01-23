@@ -1,4 +1,3 @@
-import './SignUpForm.css';
 import formStyle from '../SignInForm/SignInForm.module.css';
 import { useState } from 'react';
 import { inputOnChange } from '../../utils';
@@ -57,7 +56,7 @@ export default function SignUpForm({ setShowSignUpForm }: {setShowSignUpForm: Re
               className={`${formStyle.input} ${isErrorPassword ? "border-red-600" : "border-gray-300 active:border-blue-600"}`}
               aria-label="New Password" value={password} onChange={inputOnChange(setPassword)} />
             {isErrorPassword && <i className="fa-lg fa-solid fa-triangle-exclamation" />}
-            {signUpErrors?.map(error => <p key={error} className="text-red-600">{error}</p>)}
+            {signUpErrors?.map((error, i) => <p key={i} className="text-red-600">{error}</p>)}
           </div>
           <button className={`${formStyle.button} ${formStyle.signUp}`}>Create new account</button>
         </form>

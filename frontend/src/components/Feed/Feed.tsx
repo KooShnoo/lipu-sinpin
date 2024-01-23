@@ -13,7 +13,7 @@ export default function Feed() {
   }, []);
   return (
     <>
-      <div className="w-full mx-auto max-w-[42rem] flex flex-col gap-4">
+      <div className="w-full mx-auto mt-4 max-w-[42rem] flex flex-col gap-4">
 
         <PostFormDummy />
         {postIds.toReversed().map(postId => (

@@ -11,6 +11,10 @@ export interface User {
   status: string;
   location: string;
   bio: string;
+  createdAt: string;
+  updatedAt: string;
+  pfpUrl: string;
+  coverUrl: string;
 }
 
 type UsersState = Record<number, User>
@@ -34,35 +38,21 @@ export const loadUsers = (): Thunk => async (dispatch: Dispatch) => {
   dispatch(setUsers(users));
 };
 
-// export const postPost = (body: string): Thunk => async (dispatch: Dispatch, getState) => {
-//   const user = getState().session.user;
-//   if (!user) return;
-//   const res = await load('/api/posts', {
-//     method: "POST", 
-//     body: JSON.stringify({author_id: user.id, body}),
-//   });
-//   if (!res.ok) {
-//     alert('failed to post post.');
-//     return;
-//   }
-//   const post: Post = await res.json();
-//   dispatch(addPost(post));
-// };
-
-// export const patchPost = (post: Post): Thunk => async (dispatch: Dispatch, getState) => {
-//   const user = getState().session.user;
-//   if (!user) return;
-//   const res = await load(`/api/posts/${post.id}`, {
-//     method: "PATCH", 
-//     body: JSON.stringify(post),
-//   });
-//   if (!res.ok) {
-//     alert('failed to edit post.');
-//     return;
-//   }
-//   const postBack: Post = await res.json();
-//   dispatch(editPost(postBack));
-// };
+export const patchUser = (userData: FormData): Thunk => async (dispatch: Dispatch, getState) => {
+  const user = getState().session.user;
+  if (!user) return;
+  const res = await load(`/api/users/${userData.get('id')}`, {
+    method: "PATCH", 
+    jsonHeader: false,
+    body: userData,
+  });
+  if (!res.ok) {
+    alert('failed to edit user.');
+    return;
+  }
+  const userBack: User = await res.json();
+  dispatch(editUser(userBack));
+};
 
 // export const deletePost = (postId: number): Thunk => async (dispatch: Dispatch) => {
 //   await load(`/api/posts/${postId}`, {method: 'DELETE'});

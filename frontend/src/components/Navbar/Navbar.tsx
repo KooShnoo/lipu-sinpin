@@ -5,7 +5,6 @@ import { demoPFP_URL } from "../../utils";
 import { useEffect, useState } from "react";
 import Popover from "./Popover";
 import style from "./Navbar.module.css";
-import Theme from "./Theme";
 import { useAtomValue } from "jotai";
 import { fetchingAtom } from "../../state/atoms";
 
@@ -36,10 +35,9 @@ export default function Navbar() {
           {isLoading && <i className=" text-2xl fa-solid fa-spinner fa-spin" />}
         </div>
         <div className="flex items-center gap-4">
-          <Theme />
           <p> {`Welcome, ${user.firstName}!`}</p>
           <div className="relative">
-            <img id="pfp" src={demoPFP_URL} onClick={togglePopover} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" />
+            <img id="pfp" src={user.pfpUrl ||  demoPFP_URL} onClick={togglePopover} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" />
             <div className={style.popover}>
               {showPopover && <Popover />}
             </div>
