@@ -11,8 +11,9 @@ export const store = configureStore({
     posts: postReducer,
     users: userReducer,
   },
-  // devTools: import.meta.env.PROD,
+  devTools: import.meta.env.PROD,
 });
+console.log(`we are ${import.meta.env.PROD ? '' : 'not '}in prod mode!`);
 
 export type State = ReturnType<typeof store.getState>
 export type Dispatch = typeof store.dispatch

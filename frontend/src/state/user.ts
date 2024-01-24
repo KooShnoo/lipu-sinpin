@@ -40,13 +40,14 @@ export const loadUsers = (): Thunk => async (dispatch: Dispatch) => {
   dispatch(setUsers(users));
 };
 
-export const patchUser = (userData: FormData): Thunk => async (dispatch: Dispatch, getState) => {
+export const patchUser = (userData: FormData | Partial<User>): Thunk => async (dispatch: Dispatch, getState) => {
   const user = getState().session.user;
   if (!user) return;
-  const res = await load(`/api/users/${userData.get('id')}`, {
+  const isFd = (userData instanceof FormData);
+  const res = await load(`/api/users/${user.id}`, {
     method: "PATCH", 
-    jsonHeader: false,
-    body: userData,
+    jsonHeader: !isFd,
+    body: isFd ? userData : JSON.stringify({user: userData}),
   });
   if (!res.ok) {
     alert('failed to edit user.');

@@ -29,7 +29,7 @@ export default function Navbar() {
   if (!user) return null;
   return (
     <>
-      <div className="w-screen p-2 fixed top-0 z-10 flex justify-between bg-white dark:bg-fb-primary border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
+      <div className="w-screen p-2 fixed top-0 z-10 flex justify-between bg-white dark:bg-fb-primary dark:border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
         <div className="flex items-center gap-4">
           <Logo />
           {isLoading && <i className=" text-2xl fa-solid fa-spinner fa-spin" />}

@@ -17,6 +17,9 @@ class Api::UsersController < ApplicationController
   def update
     require_signed_in
     @user = current_user
+    p 'hehe'
+    # debugger
+    p params
     if @user.update(user_params)
       render :show
     else

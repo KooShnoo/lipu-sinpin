@@ -16,7 +16,6 @@ export default {
         "fb-secondary-text-light": "#65676B",
         "fb-comment-bg": "#3A3B3C",
         "fb-comment-bg-light": "#F0F2F5",
-
       },
     },
   },

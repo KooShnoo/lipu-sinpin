@@ -49,7 +49,6 @@ export const signInUser = (credentials: {email: string, password: string}): Thun
 };
 
 const finishSignInUser = (user: User, dispatch: Dispatch) => {
-  console.log('usah', user);
   dispatch(setUser({ user }));
   const redirect = jotaiStore.get(redirectAtom);
   router.navigate(redirect || "/home");

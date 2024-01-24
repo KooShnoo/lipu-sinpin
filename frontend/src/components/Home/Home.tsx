@@ -8,7 +8,7 @@ import { postModalAtom, redirectAtom } from "../../state/atoms";
 import PostForm from "../Post/PostForm";
 
 export default function Home() {
-  const postModal= useAtomValue(postModalAtom);
+  const postModal = useAtomValue(postModalAtom);
   const user = useSelector((state: State) => state.session.user);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -25,7 +25,9 @@ export default function Home() {
       {postModal.kind === "NONE" ? null : <PostForm type={postModal} />}
       <div className="w-screen min-h-screen bg-fb-wash-light dark:bg-fb-wash dark:text-white">
         <Navbar />
-        <Outlet />
+        <div className="px-4">
+          <Outlet />
+        </div>
       </div>
     </>
   );
