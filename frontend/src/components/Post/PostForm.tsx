@@ -59,7 +59,7 @@ export default function PostForm({ type }: {type: PostFormData}) {
               <p className="text-lg">{user.firstName} {user.lastName}</p>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <textarea placeholder={`What's on your mind, ${user.firstName}?`} value={body} onChange={inputOnChange(setBody)} className="w-full text-2xl max-h-[500px] dark:bg-fb-primary"/>
+              <textarea autoFocus placeholder={`What's on your mind, ${user.firstName}?`} value={body} onChange={inputOnChange(setBody)} className="w-full text-2xl max-h-[500px] dark:bg-fb-primary"/>
               <input type="file" ref={inputElement} />
               {error && <p className="text-red-500">{error}</p>}
               <button className="bg-fb-blue text-white dark:hover:brightness-125 hover:brightness-90 rounded-md p-2 text-sm">{ isEditForm ? "Save" : "Post"}</button>

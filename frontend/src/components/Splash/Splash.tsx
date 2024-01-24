@@ -7,7 +7,7 @@ export default function Splash() {
   
   return (
     <>
-      <div className="w-screen bg-[#f0f2f5]">
+      <div className="w-screen min-h-screen bg-[#f0f2f5]">
         {showSignUpForm && <SignUpForm setShowSignUpForm={setShowSignUpForm} />}
         <div className="mx-auto pb-[8rem] pt-[6rem] px-10 max-w-[64rem] h-full flex flex-col lg:flex-row items-center lg:justify-between">
           <div className="flex flex-col gap-4 lg:self-baseline max-w-[32rem]">

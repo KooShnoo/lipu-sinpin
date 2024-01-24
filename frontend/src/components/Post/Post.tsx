@@ -5,10 +5,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { deletePost } from "../../state/post";
 import { postFormEDIT, postModalAtom } from "../../state/atoms";
 import { useSetAtom } from "jotai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { demoPFP_URL } from "../../utils";
 import { Post } from "../../state/post";
 import { like, unlike } from "../../api/like";
+import { User } from "../../state/user";
 dayjs.extend(relativeTime);
 
 export default function Post({ post, interactable = true }: {post: Post, interactable?: boolean}) {
@@ -22,10 +23,28 @@ export default function Post({ post, interactable = true }: {post: Post, interac
   const user = useSelector((state: State) => state.session.user);
   const liker = interactable && post.likers.find(liker => liker.id === user?.id) || null;
 
+  const likerLink = (liker: User) => (<Link className="text-blue-400 bg-fb-wash hover:underline" key={liker.id} to={`/users/${liker.id}`}>{liker.firstName}</Link>); 
+  const formatLikers = () => {
+    // debugger
+    console.log(post.likers);
+    if (post.likers.length === 1) {
+      console.log(1);
+      return <p>liked by {likerLink(post.likers[0])}</p>;
+    } else if (post.likers.length === 2) {
+      console.log(2);
+      return <p>liked by {likerLink(post.likers[0])} and {likerLink(post.likers[1])}</p>;
+    } else if (post.likers.length <= 4) {
+      console.log('<=4');
+      return <p>liked by {post.likers.slice(0, -1).map(liker=>(<>{likerLink(liker)}, </>))}and {likerLink(post.likers.at(-1)!)}</p>;
+    } else {
+      console.log('>4');
+      return <p>liked by {post.likers.slice(0, 4).map(liker=>(<>{likerLink(liker)}, </>))}and {post.likers.length - 4} others</p>;
+    }
+  };
+
   const handleLike = liker 
     ? () => {dispatch(unlike(post));}
     : () => {dispatch(like(post));};
-  
 
   if (!user) return null;
   return (
@@ -56,7 +75,7 @@ export default function Post({ post, interactable = true }: {post: Post, interac
           {interactable && <>
             <hr className="border-fb-comment-bg-light dark:border-fb-comment-bg"/>
             {post.likers.length > 0 && <>
-              <p>liked by {post.likers.slice(0, 4).map(u=>u.firstName)}</p>
+              {formatLikers()}
               <hr className="border-fb-comment-bg-light dark:border-fb-comment-bg"/>
             </>}
             <div className="flex">
