@@ -8,7 +8,6 @@ import { useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { demoPFP_URL } from "../../utils";
 import { Post } from "../../state/post";
-import { load } from "../../api/csrf";
 import { like, unlike } from "../../api/like";
 dayjs.extend(relativeTime);
 
@@ -21,9 +20,9 @@ export default function Post({ post, interactable = true }: {post: Post, interac
   const editTime = dayjs(post.updatedAt).fromNow();
   const edited = !dayjs(post.createdAt).isSame(dayjs(post.updatedAt), 'minute');
   const user = useSelector((state: State) => state.session.user);
-  const likedPost = post.likers.find(liker => liker.id === user?.id) || null;
+  const liker = interactable && post.likers.find(liker => liker.id === user?.id) || null;
 
-  const handleLike = likedPost 
+  const handleLike = liker 
     ? () => {dispatch(unlike(post));}
     : () => {dispatch(like(post));};
   
@@ -65,7 +64,7 @@ export default function Post({ post, interactable = true }: {post: Post, interac
                 <div className="flex justify-center items-center h-8 w-8 brightness-200 rounded-full">
                   <i className="fa-solid fa-thumbs-up" />
                 </div>
-                {likedPost ? 'Unlike' : 'Like'}
+                {liker ? 'Unlike' : 'Like'}
               </button>
               <button className="w-full p-1 flex justify-center items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={() => navigate(`/posts/${post.id}`)}>
                 <div className="flex justify-center items-center h-8 w-8 brightness-200 rounded-full">
