@@ -9,12 +9,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     get :analytics, to: 'analytics#show'
-    
+
     resources :users, only: [:index, :show, :create, :update]
     resource :session, only: [:show, :create, :destroy]
     resources :posts, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:show, :create, :update, :destroy]
     resources :friends, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
   end
 
   get '*path', to: "static_pages#frontend_other"
