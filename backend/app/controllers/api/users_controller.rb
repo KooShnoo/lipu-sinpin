@@ -15,7 +15,7 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    require_signed_in
+    return if require_signed_in
     @user = current_user
     p 'hehe'
     # debugger

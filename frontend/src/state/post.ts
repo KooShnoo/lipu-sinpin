@@ -11,6 +11,7 @@ export interface Post {
   updatedAt: string;
   photoUrl: string | null;
   author : User;
+  likers: User[];
 }
 
 type PostsState = Record<number, Post>

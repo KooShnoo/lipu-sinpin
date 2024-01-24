@@ -15,7 +15,10 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show, :create, :update, :destroy]
     resources :comments, only: [:show, :create, :update, :destroy]
     resources :friends, only: [:create, :destroy]
-    resources :likes, only: [:create, :destroy]
+    resources :likes, only: [:create]
+
+    # who uses REST APIs in 2024 anyway? what a mess
+    delete 'posts/:postId/likes', to: "likes#destroy"
   end
 
   get '*path', to: "static_pages#frontend_other"

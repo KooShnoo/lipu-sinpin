@@ -14,7 +14,7 @@ export async function restoreCSRF() {
 /** uses the session token to get the current user */
 export async function getCurrentUser(): Promise<User | null> {
   const res = await restoreCSRF();
-  const user= await res.json();
+  const user = await res.json();
   return user;
 }
 

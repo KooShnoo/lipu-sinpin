@@ -5,7 +5,7 @@ class Api::SessionsController < ApplicationController
       @user = current_user
       render 'api/users/show'
     else
-      render json: { user: nil }
+      render json: nil
     end
   end
 

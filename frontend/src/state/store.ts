@@ -11,7 +11,7 @@ export const store = configureStore({
     posts: postReducer,
     users: userReducer,
   },
-  devTools: import.meta.env.PROD,
+  devTools: !import.meta.env.PROD,
 });
 console.log(`we are ${import.meta.env.PROD ? '' : 'not '}in prod mode!`);
 

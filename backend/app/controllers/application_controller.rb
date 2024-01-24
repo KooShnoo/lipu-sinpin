@@ -19,11 +19,12 @@ class ApplicationController < ActionController::API
   end
 
   def require_signed_in
-    # rubocop:disable Style/GuardClause, Style/IfUnlessModifier
+    # rubocop:disable Style/GuardClause, Style/RedundantReturn
     unless current_user
       render json: { message: 'Must be signed in.' }, status: :unauthorized
+      return true
     end
-    # rubocop:enable Style/GuardClause, Style/IfUnlessModifier
+    # rubocop:enable Style/GuardClause, Style/RedundantReturn
   end
 
   private

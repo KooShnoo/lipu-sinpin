@@ -4,3 +4,4 @@ json.author do
   json.extract! post.author, :first_name, :last_name
 end
 json.photoUrl post.photo.attached? ? post.photo.url : nil
+json.likers { json.array! post.likers, partial: "api/users/user", as: :user }

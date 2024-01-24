@@ -43,6 +43,8 @@ class CreateTables < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
+    add_index :likes, [:liker_id, :liked_id], unique: true
+
     create_table :analytics do |t|
       t.integer :page_serves
 
