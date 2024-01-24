@@ -9,6 +9,7 @@ class StaticPagesController < ActionController::Base
   def frontend_other
     fpath = "public_#{request.env['PATH_INFO']}"
     if File.file?(fpath)
+      Analytic.first.increment! :page_serves
       send_file fpath
     else
       frontend_index
