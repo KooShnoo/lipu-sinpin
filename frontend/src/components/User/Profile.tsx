@@ -13,10 +13,10 @@ export default function Profile() {
   if (!params.userId) return "oopsies!!! no params D:";
   const userId = parseInt(params.userId);
   if (Number.isNaN(userId)) return "oopsies!!! NaN params D:";
-  useEffect(() => {
-    dispatch(loadUsers());
-  }, []);
   const user = useSelector((state: State) => state.users[userId]);
+  useEffect(() => {
+    if (!user) dispatch(loadUsers());
+  }, []);
   if (!user) return "loading...";
   return (
     <>
@@ -32,7 +32,7 @@ export default function Profile() {
             <div className="bg-white drop-shadow-md dark:bg-fb-primary p-2 flex gap-4 rounded-lg text-xl">Posts: </div>
             {user.posts.toReversed().map(post => {
               post = {...post, author: user};
-              return <Post key={post.id} post={post}/>;
+              return <Post key={post.id} post={post} interactable={false} />;
             })}
           </div>
 

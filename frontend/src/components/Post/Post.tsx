@@ -10,7 +10,7 @@ import { demoPFP_URL } from "../../utils";
 import { Post } from "../../state/post";
 dayjs.extend(relativeTime);
 
-export default function Post({ post }: {post: Post}) {
+export default function Post({ post, interactable = true }: {post: Post, interactable?: boolean}) {
   const dispatch: Dispatch = useDispatch();
   const navigate= useNavigate();
   const setPostModal = useSetAtom(postModalAtom);
@@ -25,26 +25,45 @@ export default function Post({ post }: {post: Post}) {
   return (
     <>
       <div className="bg-white drop-shadow-md dark:bg-fb-primary p-2 rounded-lg flex justify-between">
-        <div>
-          <div className="flex gap-2">
-            <img id="pfp-post" src={post.author.pfpUrl || demoPFP_URL} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" onClick={() => navigate(`/users/${post.author.id}`)} />
-            <div>
-              <p>{post.author.firstName} {post.author.lastName} says:</p>
-              <p className="text-xs text-fb-secondary-text-light dark:text-fb-secondary-text">{postTime}</p>
-              {edited && <p className="text-xs italic text-fb-secondary-text-light dark:text-fb-secondary-text">edited {editTime}</p>}
+        <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex justify-between">
+            <div className="flex gap-2">
+
+              <img id="pfp-post" src={post.author.pfpUrl || demoPFP_URL} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" onClick={() => navigate(`/users/${post.author.id}`)} />
+              <div>
+                <p>{post.author.firstName} {post.author.lastName} says:</p>
+                <p className="text-xs text-fb-secondary-text-light dark:text-fb-secondary-text">{postTime}</p>
+                {edited && <p className="text-xs italic text-fb-secondary-text-light dark:text-fb-secondary-text">edited {editTime}</p>}
+              </div>
             </div>
+            {(user.id === post.authorId) && <div className="flex">
+              <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>dispatch(deletePost(post.id))}>
+                <i className="fa-solid fa-trash" />
+              </button>
+              <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>setPostModal(postFormEDIT(post))}>
+                <i className="fa-solid fa-pen-to-square" />
+              </button>
+            </div>}
           </div>
           <p className="text-xl">{post.body}</p>
           {post.photoUrl && <img src={post.photoUrl}/>}
+          {interactable && <><hr className="border-fb-comment-bg-light dark:border-fb-comment-bg"/>
+            <div className="flex">
+              <button className="w-full p-1 flex justify-center items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={() => alert('nope.')}>
+                <div className="flex justify-center items-center h-8 w-8 brightness-200 rounded-full">
+                  <i className="fa-solid fa-thumbs-up" />
+                </div>
+              Like
+              </button>
+              <button className="w-full p-1 flex justify-center items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={() => navigate(`/posts/${post.id}`)}>
+                <div className="flex justify-center items-center h-8 w-8 brightness-200 rounded-full">
+                  <i className="fa-solid fa-share" />
+                </div>
+              Share
+              </button>
+            </div></>}
         </div>
-        {(user.id === post.authorId) && (<div className="flex">
-          <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>dispatch(deletePost(post.id))}>
-            <i className="fa-solid fa-trash" />
-          </button>
-          <button className="bg-inherit h-8 w-8 hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg rounded-full" onClick={()=>setPostModal(postFormEDIT(post))}>
-            <i className="fa-solid fa-pen-to-square" />
-          </button>
-        </div>)}
+
       </div>
     </>
   );

@@ -14,6 +14,7 @@ import Feed from './components/Feed/Feed.tsx';
 import Users from './components/User/Users.tsx';
 import { jotaiStore } from './state/atoms.ts';
 import Profile from './components/User/Profile.tsx';
+import PostPage from './components/Post/PostPage.tsx';
 
 const user = await getCurrentUser();
 if (user) reduxStore.dispatch(setUser({user}));
@@ -38,6 +39,11 @@ export const router = createBrowserRouter([
     path: 'users/:userId',
     element: <Home />,
     children: [{index: true, element: <Profile />}],
+  },
+  {
+    path: 'posts/:postId',
+    element: <Home />,
+    children: [{index: true, element: <PostPage />}],
   },
 ]);
 
