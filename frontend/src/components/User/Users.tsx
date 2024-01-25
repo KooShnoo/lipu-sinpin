@@ -12,11 +12,11 @@ export default function Users() {
   }, []);
   return (
     <>
-      <h1>Users: </h1>
-      <p>todo...</p>
-      {userIds.map(userId => (
-        <User key={userId} userId={userId} />
-      ))}
+      <div className="flex flex-wrap mt-2 justify-center gap-8">
+        {userIds.map(userId => (
+          <User key={userId} userId={userId} />
+        ))}
+      </div>
     </>
   );
 }

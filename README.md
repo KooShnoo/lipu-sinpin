@@ -1,4 +1,4 @@
-# [lipu sinpin](https://lipu-sinpin.fly.dev): (sort of) a facebook clone
+# [lipu sinpin](https://lipu-sinpin.fly.dev): a fakebook (clone of facebook)
 
 [![Code Size](https://img.shields.io/github/languages/code-size/KooShnoo/lipu-sinpin)](https://github.com/KooShnoo/lipu-sinpin)
 [![LoC](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.codetabs.com%2Fv1%2Floc%2F%3Fgithub%3DKooShnoo%2Flipu-sinpin&query=%24%5B%3F(%40.language%3D%3D%22Total%22)%5D.linesOfCode&label=lines%20of%20code)](https://github.com/KooShnoo/lipu-sinpin)
@@ -15,12 +15,27 @@
 [![Redux](https://img.shields.io/github/package-json/dependency-version/KooShnoo/lipu-sinpin/@reduxjs/toolkit?filename=frontend%2Fpackage.json)](https://redux.js.org)
 [![React Router](https://img.shields.io/github/package-json/dependency-version/KooShnoo/lipu-sinpin/react-router-dom?filename=frontend%2Fpackage.json)](https://reactrouter.com/en/main)
 
-lipu sinpin!! lipu sinpin is a full stack fakebook (facebook clone). all sorts of cool features are in the pipeline, so stay tuned!
+lipu sinpin!! lipu sinpin is a full stack fakebook (clone of facebook). all sorts of cool features are in the pipeline, so stay tuned!
 
 try out [lipu sinpin](https://lipu-sinpin.fly.dev) now! go ahead, do it! do it~~
 
 > [!NOTE]
-> *lipu sinpin is currently hosted on a small, free-tier compute isntance. please do not spam or ddos it. lipu sinpin is mostly for demonstration. if the website goes down, please open an issue. thank you.*
+> *lipu sinpin is currently hosted on a small free compute instance. please do not spam or ddos it. if the website goes down, please open an issue. thank you.*
+
+## features
+users can do many but not all of the things they expect on a social media site. 
+
+### post!
+write amazing posts to keep the lipu sinpin userbase informed of all the great wisdom you have to share. include an image with your post to add a visual component. edit or delete posts that didn't quite meet your standards.
+
+### share!
+if you like a post, click the like button to share your appreciation for that post with the lipu sinpin community. [![size of lipu sinpin community](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flipu-sinpin.fly.dev%2Fapi%2Fanalytics&query=%24.users&label=current%20size%20of%20lipu%20sinpin%20community%3A)](https://lipu-sinpin.fly.dev/users) share the link to your post with users on other social media platforms so they can see how amazing lipu sinpin is!
+
+### be yourself!
+cuztomize your profile page to help you stand out on lipu sinpin. add a bio to let the world [![size of lipu sinpin world](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flipu-sinpin.fly.dev%2Fapi%2Fanalytics&query=%24.users&label=current%20size%20of%20lipu%20sinpin%20world%3A)](https://lipu-sinpin.fly.dev/users) see who you are, and add a status to let the world what you're up to. set your profile picture and cover photo to give your profile a splash of color and some extra personality.
+
+### wait!
+discover how limited the functionality of lipu sinpin is by using it for more than a few minutes, and then wait for me to add more features.
 
 ## why is it called lipu sinpin?
 someone made up a language called [toki pona](https://en.wikipedia.org/wiki/Toki_Pona), and lipu sinpin is one way to say "facebook" in that language. it's very cool! i can't use the language at all, but it's very cool!
@@ -29,11 +44,12 @@ someone made up a language called [toki pona](https://en.wikipedia.org/wiki/Toki
 for fun and learning!
 
 ## how is it a thing?
-lipu sinpin is a full stack single page application. it is built with a monolithic [ruby on rails](https://rubyonrails.org/) backend, and it uses [react](https://react.dev/) with [redux](https://redux.js.org) on the frontend. it's written in [typescript](https://www.typescriptlang.org/), styled with [tailwind](https://tailwindcss.com/), and it uses [react-router](https://reactrouter.com/en/main) for client-side routing. i've currently got it hosted for free using [fly.io](https://fly.io/).
+lipu sinpin is a full stack single page application. it is built with a monolithic [ruby on rails](https://rubyonrails.org/) backend, and it uses [react](https://react.dev/) with [redux](https://redux.js.org) on the frontend. it's written in [typescript](https://www.typescriptlang.org/), styled with [tailwind](https://tailwindcss.com/), and it uses [react-router](https://reactrouter.com/en/main) for client-side routing. photos are stored in an [aws s3 bucket](https://aws.amazon.com/s3/), and i've currently got it hosted for free using [fly.io](https://fly.io/).
 
 check out the [wiki](https://github.com/KooShnoo/lipu-sinpin/wiki) for more info!
 
-## quick start
+## self-hosting
+lipu sinpin is 100% open source, so you can host an instance yourself.
 ### prerequisites
 make sure you have [ruby](https://www.ruby-lang.org/) and [node](https://github.com/nvm-sh/) installed.
 ### instructions

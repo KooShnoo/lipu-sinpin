@@ -23,22 +23,16 @@ export default function Post({ post, interactable = true }: {post: Post, interac
   const user = useSelector((state: State) => state.session.user);
   const liker = interactable && post.likers.find(liker => liker.id === user?.id) || null;
 
-  const likerLink = (liker: User) => (<Link className="text-blue-400 bg-fb-wash hover:underline" key={liker.id} to={`/users/${liker.id}`}>{liker.firstName}</Link>); 
+  const likerLink = (liker: User) => (<Link className="hover:underline" key={liker.id} to={`/users/${liker.id}`}>{liker.firstName}</Link>); 
   const formatLikers = () => {
-    // debugger
-    console.log(post.likers);
     if (post.likers.length === 1) {
-      console.log(1);
-      return <p>liked by {likerLink(post.likers[0])}</p>;
+      return <div className="flex gap-1">liked by {likerLink(post.likers[0])}</div>;
     } else if (post.likers.length === 2) {
-      console.log(2);
-      return <p>liked by {likerLink(post.likers[0])} and {likerLink(post.likers[1])}</p>;
+      return <div className="flex gap-1">liked by {likerLink(post.likers[0])} and {likerLink(post.likers[1])}</div>;
     } else if (post.likers.length <= 4) {
-      console.log('<=4');
-      return <p>liked by {post.likers.slice(0, -1).map(liker=>(<>{likerLink(liker)}, </>))}and {likerLink(post.likers.at(-1)!)}</p>;
+      return <div className="flex gap-1">liked by {post.likers.slice(0, -1).map(liker=>(<p key={liker.id}>{likerLink(liker)}, </p>))}and {likerLink(post.likers.at(-1)!)}</div>;
     } else {
-      console.log('>4');
-      return <p>liked by {post.likers.slice(0, 4).map(liker=>(<>{likerLink(liker)}, </>))}and {post.likers.length - 4} others</p>;
+      return <div className="flex gap-1">liked by {post.likers.slice(0, 4).map(liker=>(<p key={liker.id}>{likerLink(liker)}, </p>))}and {post.likers.length - 4} others</div>;
     }
   };
 
