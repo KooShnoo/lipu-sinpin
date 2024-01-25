@@ -1,3 +1,6 @@
+[![lipu sinpin](./frontend/public/lipu-sinpin.svg)](https://lipu-sinpin.fly.dev)
+
+
 # [lipu sinpin](https://lipu-sinpin.fly.dev): a fakebook (clone of facebook)
 
 [![Code Size](https://img.shields.io/github/languages/code-size/KooShnoo/lipu-sinpin)](https://github.com/KooShnoo/lipu-sinpin)

@@ -13,7 +13,7 @@ export default function Logo() {
     () =>  navigate("/home");
   return (
     <>
-      <img title="home" onClick={handleClick} className="overflow-hidden w-12 h-12 cursor-pointer" src="/lipu-sinpin.svg"  />
+      <img title="home" onClick={handleClick} className="overflow-hidden w-12 h-12 cursor-pointer" src="/ls-logo.svg"  />
     </>
   );
 }
