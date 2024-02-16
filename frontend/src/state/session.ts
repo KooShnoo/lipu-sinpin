@@ -1,7 +1,7 @@
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { load } from "../api/csrf";
 import { Thunk } from "./store";
-import { setSignInErrors, setSignUpErrors } from "./error";
+import { SignUpErrors, setSignInErrors, setSignUpErrors } from "./error";
 import { router } from "../main";
 import { jotaiStore, redirectAtom } from "./atoms";
 import { User } from "./user";
@@ -22,10 +22,10 @@ export const signUpUser = (user: {first_name: string, last_name: string, email: 
     body: JSON.stringify({user}),
   });
   if (res.status === 422 /* bad data */) {
-    const errors: {errors: string[]} = (await res.json());
+    const errors: {errors: SignUpErrors} = (await res.json());
     dispatch(setSignUpErrors(errors));
   } else if (!res.ok) {
-    dispatch(setSignUpErrors({errors: ["an unexpected error occured. please try to sign in again."]}));
+    dispatch(setSignUpErrors({errors: "an unexpected error occured. please try to sign up again."}));
   } else {
     const user: User = await res.json();
     finishSignInUser(user, dispatch);

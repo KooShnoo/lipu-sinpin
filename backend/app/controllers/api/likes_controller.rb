@@ -2,6 +2,7 @@
 class Api::LikesController < ApplicationController
   def create
     return if require_signed_in
+
     # debugger
     @like = Like.new(like_params.merge(liker_id: current_user.id))
     if @like.save

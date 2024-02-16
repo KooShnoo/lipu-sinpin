@@ -44,7 +44,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <div className="w-screen h-[4.5rem]" />
+      <div className="w-screen h-[calc(4rem+2px)]" />
     </>
   );
 }

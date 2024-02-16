@@ -10,12 +10,13 @@ class Api::UsersController < ApplicationController
       signin!(@user)
       render :show
     else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @user.errors.to_hash.except(:password_digest) }, status: :unprocessable_entity
     end
   end
 
   def update
     return if require_signed_in
+
     @user = current_user
     p 'hehe'
     # debugger

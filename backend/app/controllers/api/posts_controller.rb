@@ -6,6 +6,7 @@ class Api::PostsController < ApplicationController
 
   def create
     return if require_signed_in
+
     @post = Post.new(post_params.merge(author_id: current_user.id))
     if @post.save
       render :show
@@ -21,6 +22,7 @@ class Api::PostsController < ApplicationController
 
   def update
     return if require_signed_in
+
     @post = Post.find_by(id: params[:id])
     render json: { errors: ["Cannot edit other user's post"] } if @post.author_id != current_user.id
     if @post.update(post_params)
@@ -32,6 +34,7 @@ class Api::PostsController < ApplicationController
 
   def destroy
     return if require_signed_in
+
     @post = Post.find_by(id: params[:id])
     render json: { errors: ["Cannot delete other user's post"] } if @post.author_id != current_user.id
     if @post.destroy
