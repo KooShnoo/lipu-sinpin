@@ -9,7 +9,13 @@
   font-style: normal;
 }
 
+@layer utilities {
 .fa-triangle-exclamation {
   color: red;
   @apply absolute right-3 top-7
+}
+
+.bluified {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(40%) saturate(1844%) hue-rotate(193deg) brightness(101%) contrast(93%);
+}
 }

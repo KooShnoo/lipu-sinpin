@@ -23,6 +23,7 @@ export default function Cover() {
   finput.onchange = e => { 
     const files = (e.target! as HTMLInputElement).files;
     if (!files) return;
+    if (!files[0].type.match('image.*')) return;
     const fd = new FormData();
     fd.append(`user[${editing === "COVER" ? 'cover' : 'pfp'}]`, files[0]);
     

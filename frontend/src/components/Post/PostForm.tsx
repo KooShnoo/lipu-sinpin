@@ -28,6 +28,10 @@ export default function PostForm({ type }: {type: PostFormData}) {
         setError('post is too long.');
         return;
       }
+      if (inputElement.current?.files?.length === 1 && !inputElement.current.files[0].type.match('image.*')) {
+        setError('you can only post images.');
+        return;
+      }
 
       const fd = new FormData();
       fd.append('post[body]', body);

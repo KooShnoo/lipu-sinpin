@@ -10,18 +10,20 @@ import { demoPFP_URL } from "../../utils";
 import { Post } from "../../state/post";
 import { like, unlike } from "../../api/like";
 import { User } from "../../state/user";
+import { useState } from "react";
 dayjs.extend(relativeTime);
 
 export default function Post({ post, interactable = true }: {post: Post, interactable?: boolean}) {
   const dispatch: Dispatch = useDispatch();
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const setPostModal = useSetAtom(postModalAtom);
-  // const post = useSelector((state: State) => state.posts[postId]);
   const postTime = dayjs(post.createdAt).fromNow();
   const editTime = dayjs(post.updatedAt).fromNow();
   const edited = !dayjs(post.createdAt).isSame(dayjs(post.updatedAt), 'minute');
   const user = useSelector((state: State) => state.session.user);
   const liker = interactable && post.likers.find(liker => liker.id === user?.id) || null;
+
+  const [isShared, setIsShared] = useState(false);
 
   const likerLink = (liker: User) => (<Link className="hover:underline" key={liker.id} to={`/users/${liker.id}`}>{liker.firstName}</Link>); 
   const formatLikers = () => {
@@ -39,6 +41,11 @@ export default function Post({ post, interactable = true }: {post: Post, interac
   const handleLike = liker 
     ? () => {dispatch(unlike(post));}
     : () => {dispatch(like(post));};
+  
+  const handleShare = async () => {
+    await navigator.clipboard.writeText(new URL(`/posts/${post.id}`, document.baseURI).href);
+    setIsShared(true);
+  };
 
   if (!user) return null;
   return (
@@ -79,11 +86,11 @@ export default function Post({ post, interactable = true }: {post: Post, interac
                 </div>
                 {liker ? 'Unlike' : 'Like'}
               </button>
-              <button className="w-full p-1 flex justify-center items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={() => navigate(`/posts/${post.id}`)}>
+              <button className="w-full p-1 flex justify-center items-center bg-inherit hover:bg-fb-comment-bg-light hover:dark:bg-fb-comment-bg transition-colors rounded-md" onClick={handleShare}>
                 <div className="flex justify-center items-center h-8 w-8 brightness-200 rounded-full">
                   <i className="fa-solid fa-share" />
                 </div>
-              Share
+                {isShared ? "copied!" :"Share"}
               </button>
             </div></>}
         </div>

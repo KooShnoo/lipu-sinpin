@@ -29,13 +29,21 @@ export default function Navbar() {
   if (!user) return null;
   return (
     <>
-      <div className="w-screen p-2 fixed top-0 z-10 flex justify-between bg-white dark:bg-fb-primary dark:border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
-        <div className="flex items-center gap-4">
+      <div className="w-screen p-2 fixed top-0 z-10 flex bg-white dark:bg-fb-primary dark:border-b-2 border-fb-comment-bg-light dark:border-fb-comment-bg">
+        <div className="flex flex-1 items-center gap-4">
           <Logo />
           {isLoading && <i className=" text-2xl fa-solid fa-spinner fa-spin" />}
         </div>
-        <div className="flex items-center gap-4">
-          <p> {`Welcome, ${user.firstName}!`}</p>
+        <div className="flex flex-auto gap-2 justify-center items-center">
+          <a target="_blank" href="https://github.com/KooShnoo/lipu-sinpin">
+            <img className="h-12 hover:bluified transition-[filter] duration-75" src="/github.svg" alt="github" />
+          </a>
+          <a target="_blank" href="https://www.linkedin.com/in/ishan-chawla/">
+            <img className="h-12 hover:bluified transition-[filter] duration-75" src="/linkedin.svg" alt="linkedin" />
+          </a>
+        </div>
+        <div className="flex flex-1 justify-end items-center gap-4">
+          <p className="hidden sm:block"> {`Welcome, ${user.firstName}!`}</p>
           <div className="relative">
             <img id="pfp" src={user.pfpUrl ||  demoPFP_URL} onClick={togglePopover} alt="profile picture" className="w-12 h-12 rounded-full cursor-pointer active:scale-90 transition-all" />
             <div className={style.popover}>
