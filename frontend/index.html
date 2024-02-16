@@ -7,9 +7,13 @@
     <script type="module" src="/src/main.tsx"></script>
     <script> /* theme */ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {document.documentElement.classList.add('dark');} else {document.documentElement.classList.remove('dark');}</script>
     <script src="https://kit.fontawesome.com/163d90ec77.js" crossorigin="anonymous"></script>
+    <style> @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } } </style>
     <title>lipu sinpin</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      Loading...
+      <img src="/ls-logo.svg" alt="lipu sinpin logo" style="height: 3rem; margin: auto; animation: spin 2s linear infinite;">
+    </div>
   </body>
 </html>

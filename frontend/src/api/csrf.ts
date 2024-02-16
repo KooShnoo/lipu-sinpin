@@ -6,8 +6,11 @@ import { wait } from "../utils";
 export async function restoreCSRF() {
   const response = await load("/api/session", {csrfHeader: false});
   const csrfToken = response.headers.get("X-CSRF-Token");
-  console.assert(!!csrfToken, "[FATAL] backend didn't give a csrf token.");
-  if (csrfToken) sessionStorage.setItem("X-CSRF-Token", csrfToken);
+  if (!csrfToken) {
+    document.body.innerHTML = "<h1>lipu sinpin servers are down. sorry.</h1>";
+    throw new Error('Servers Down!!! D:');
+  }
+  sessionStorage.setItem("X-CSRF-Token", csrfToken);
   return response;
 }
 
